@@ -1,6 +1,14 @@
 # Changelog
 
-## Version 1.0.9 (Current)
+## Version 1.1.0 (Current)
+- Fixed extension state being lost when navigating between pages
+- Extension now remembers selected person and active tab
+- Automatically shows person selector when reopening popup if data is loaded
+- No longer resets to "Load Data" screen after page navigation
+- Better state persistence using Chrome storage API
+- Smoother user experience during multi-page form filling
+
+## Version 1.0.9
 - Fixed language dropdown not filling due to native script options
 - Added language mapping for common languages (Japanese → 日本語, etc.)
 - Auto-converts English language names to native scripts

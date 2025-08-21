@@ -13,6 +13,9 @@ document.querySelectorAll('.tab').forEach(tab => {
     tab.classList.add('active');
     const tabId = tab.dataset.tab + 'Tab';
     document.getElementById(tabId).classList.add('active');
+    
+    // Save active tab to storage
+    chrome.storage.local.set({ activeTab: tab.dataset.tab });
   });
 });
 
@@ -24,7 +27,52 @@ document.addEventListener('DOMContentLoaded', () => {
       currentData = response.data;
       updateFieldCount();
       updatePersonSelector();
-      showStatus('Data loaded from storage', 'success');
+      
+      // Check if we should show person selector (data has person info)
+      if (hasPersonData()) {
+        showPersonSelector();
+        showStatus('Ready to fill form', 'success');
+      } else {
+        showStatus('Data loaded from storage', 'success');
+      }
+    }
+  });
+  
+  // Also check chrome.storage.local in case background script isn't available
+  chrome.storage.local.get(['visaData', 'selectedPersonId', 'activeTab', 'uiState'], (result) => {
+    if (result.visaData && !currentData) {
+      currentData = result.visaData;
+      document.getElementById('dataInput').value = JSON.stringify(currentData, null, 2);
+      updateFieldCount();
+      updatePersonSelector();
+      
+      // Restore UI state (person selector vs data input)
+      if (result.uiState === 'personSelector' && hasPersonData()) {
+        showPersonSelector();
+        showStatus('Ready to fill form', 'success');
+      } else if (hasPersonData() && !result.uiState) {
+        // Default to person selector if data has person info
+        showPersonSelector();
+        showStatus('Ready to fill form', 'success');
+      }
+    }
+    
+    // Restore active tab
+    if (result.activeTab) {
+      // Remove active class from all tabs
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      
+      // Add active class to saved tab
+      const savedTab = document.querySelector(`[data-tab="${result.activeTab}"]`);
+      if (savedTab) {
+        savedTab.classList.add('active');
+        const tabId = result.activeTab + 'Tab';
+        const tabContent = document.getElementById(tabId);
+        if (tabContent) {
+          tabContent.classList.add('active');
+        }
+      }
     }
   });
   
@@ -103,12 +151,16 @@ function showPersonSelector() {
   document.getElementById('personSelectionArea').style.display = 'block';
   document.getElementById('dataInputArea').style.display = 'none';
   updatePersonSelector();
+  // Save UI state
+  chrome.storage.local.set({ uiState: 'personSelector' });
 }
 
 // Hide person selector and show data input
 function hidePersonSelector() {
   document.getElementById('personSelectionArea').style.display = 'none';
   document.getElementById('dataInputArea').style.display = 'block';
+  // Save UI state
+  chrome.storage.local.set({ uiState: 'dataInput' });
 }
 
 // Fill selected person button
