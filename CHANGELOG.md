@@ -1,6 +1,12 @@
 # Changelog
 
-## Version 1.1.0 (Current)
+## Version 1.1.1 (Current)
+- Improved UI with more rounded corners for modern appearance
+- Updated all UI elements with consistent border-radius
+- Cards now have 16px rounded corners
+- Better visual consistency throughout the extension
+
+## Version 1.1.0
 - Fixed extension state being lost when navigating between pages
 - Extension now remembers selected person and active tab
 - Automatically shows person selector when reopening popup if data is loaded
