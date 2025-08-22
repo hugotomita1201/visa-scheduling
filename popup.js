@@ -193,8 +193,8 @@ document.getElementById('fillSelectedPersonBtn').addEventListener('click', async
   // Get current tab
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   
-  if (!tab.url || (!tab.url.includes('usvisascheduling.com') && !tab.url.includes('ais.usvisa-info.com') && !tab.url.includes('ayobaspremium.jp'))) {
-    showStatus('Please navigate to the US Visa Scheduling or Payment form first', 'error');
+  if (!tab.url || (!tab.url.includes('usvisascheduling.com') && !tab.url.includes('ais.usvisa-info.com') && !tab.url.includes('ayobaspremium.jp') && !tab.url.includes('atlasauth.b2clogin.com'))) {
+    showStatus('Please navigate to the US Visa Scheduling, Payment, or Signup form first', 'error');
     return;
   }
   

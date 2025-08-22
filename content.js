@@ -90,6 +90,8 @@ class VisaSchedulingFiller {
     // Check for payment page
     if (url.includes('ayobaspremium') || title.includes('ayobas premium') || path.includes('payment')) {
       return 'payment';
+    } else if (url.includes('atlasauth.b2clogin.com') || title.includes('user details')) {
+      return 'signup';
     } else if (path.includes('visa_options') || title.includes('visa options')) {
       return 'visa_options';
     } else if (path.includes('additional_visa_options') || title.includes('additional options')) {
@@ -197,6 +199,9 @@ class VisaSchedulingFiller {
       switch(pageType) {
         case 'payment':
           this.fillPaymentPage(data);
+          break;
+        case 'signup':
+          this.fillSignupPage(data);
           break;
         case 'applicant_details':
           this.fillApplicantDetails(data);
@@ -330,6 +335,47 @@ class VisaSchedulingFiller {
     }
   }
 
+  // Fill signup page (Atlas Auth)
+  fillSignupPage(data) {
+    // Username: first letter of first name + last name + 11835
+    const firstName = data.givenName || data.atlas_first_name || data.firstname || '';
+    const lastName = data.surname || data.atlas_last_name || data.lastname || '';
+    if (firstName && lastName) {
+      const username = firstName.charAt(0).toLowerCase() + lastName.toLowerCase() + '11835';
+      this.fillField('signInName', username);
+    }
+    
+    // Password fields
+    const password = 'Tomitalawoffice11835?';
+    this.fillField('newPassword', password);
+    this.fillField('reenterPassword', password);
+    
+    // Email: same pattern as payment page
+    if (firstName && lastName) {
+      const email = firstName.charAt(0).toLowerCase() + lastName.toLowerCase() + '11835@tomitalawoffice.net';
+      this.fillField('email', email);
+    }
+    
+    // Name fields
+    this.fillField('givenName', firstName);
+    this.fillField('surname', lastName);
+    
+    // Security questions and answers
+    // Question 1: Mother's maiden name -> Tomita
+    this.fillDropdownByText('extension_kbq1', "What is your mother's maiden name?");
+    this.fillField('extension_kba1', 'Tomita');
+    
+    // Question 2: Street you grew up on -> Law
+    this.fillDropdownByText('extension_kbq2', "What is the name of the road/street you grew up on?");
+    this.fillField('extension_kba2', 'Law');
+    
+    // Question 3: Where you met spouse -> Office
+    this.fillDropdownByText('extension_kbq3', "Where did you meet your spouse?");
+    this.fillField('extension_kba3', 'Office');
+    
+    this.showNotification('Signup form filled successfully!');
+  }
+  
   // Fill payment page (Ayobas Premium)
   fillPaymentPage(data) {
     // Payment amount - extract from price or use provided amount

@@ -12,8 +12,8 @@ Payment Method: Credit Card
 
 BILLING INFORMATION
 ------------------
-Email: payment.processor@ayobaspremium.jp (DO NOT USE APPLICANT'S EMAIL)
-Re-enter Email: payment.processor@ayobaspremium.jp
+Email: tyamamoto11835@tomitalawoffice.net (Pattern: [first_initial][lastname]11835@tomitalawoffice.net)
+Re-enter Email: tyamamoto11835@tomitalawoffice.net
 
 Given Name: Takeshi (FROM MAIN APPLICANT)
 Last Name: Yamamoto (FROM MAIN APPLICANT)
