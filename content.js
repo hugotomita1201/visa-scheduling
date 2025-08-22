@@ -42,6 +42,12 @@ class VisaSchedulingFiller {
       console.log(`Detected page: ${pageType}`);
     }
     
+    // Check if we're on visa options page and show helper popup
+    // DISABLED - No longer needed
+    // if (pageType === 'visa_options' || pageType === 'additional_options') {
+    //   this.checkAndShowVisaOptionsPopup();
+    // }
+    
     // Removed auto-show selector - now triggered manually via popup button
     // if (this.isOnDependentPage()) {
     //   this.loadDependentsFromStorage();
@@ -84,6 +90,10 @@ class VisaSchedulingFiller {
     // Check for payment page
     if (url.includes('ayobaspremium') || title.includes('ayobas premium') || path.includes('payment')) {
       return 'payment';
+    } else if (path.includes('visa_options') || title.includes('visa options')) {
+      return 'visa_options';
+    } else if (path.includes('additional_visa_options') || title.includes('additional options')) {
+      return 'additional_options';
     } else if (path.includes('applicant_details') || title.includes('applicant')) {
       return 'applicant_details';
     } else if (path.includes('family') || title.includes('family')) {
@@ -724,32 +734,43 @@ class VisaSchedulingFiller {
   
   // Language mapping for preferred language dropdown
   getLanguageMapping(language) {
+    if (!language) return 'English';
+    
+    // Normalize the input - handle case variations (ENGLISH, English, english)
+    const normalizedLanguage = language.charAt(0).toUpperCase() + language.slice(1).toLowerCase();
+    
+    // Map to the actual text shown in the dropdown options
     const languageMap = {
-      'Japanese': '日本語',
+      'Japanese': 'Japanese',  // The dropdown shows "Japanese" not "日本語"
       'English': 'English',
       'Chinese': '中文(中国)',
       'Chinese (Taiwan)': '中文(台灣)',
       'Korean': '한국어',
       'Spanish': 'español',
-      'French': 'français',
-      'German': 'Deutsch',
-      'Russian': 'русский',
-      'Arabic': 'العربية',
-      'Thai': 'ไทย',
-      'Vietnamese': 'Tiếng Việt',
-      'Turkish': 'Türkçe',
+      'French': 'French',  // The dropdown shows "French"
+      'German': 'German',  // The dropdown shows "German"
+      'Russian': 'Russian',  // The dropdown shows "Russian"
+      'Arabic': 'Arabic',  // The dropdown shows "Arabic"
+      'Thai': 'Thailand',  // The dropdown shows "Thailand"
+      'Vietnamese': 'Vietnamese',  // The dropdown shows "Vietnamese"
+      'Turkish': 'Turkish',  // The dropdown shows "Turkish"
       'Portuguese': 'português',
       'Italian': 'italiano',
       'Hindi': 'हिंदी',
-      'Indonesian': 'Bahasa Indonesia',
-      'Malay': 'Bahasa Melayu',
+      'Indonesian': 'Indonesian',  // The dropdown shows "Indonesian"
+      'Malay': 'Malay',  // The dropdown shows "Malay"
       'Filipino': 'Filipino',
       'Urdu': 'Urdu',
-      'Tamil': 'Tamil'
+      'Tamil': 'Tamil',
+      'Polish': 'Polish',  // The dropdown shows "Polish"
+      'Swedish': 'Swedish',  // The dropdown shows "Swedish"
+      'Norwegian': 'Norwegian Bokmål',  // The dropdown shows "Norwegian Bokmål"
+      'Danish': 'Danish',  // The dropdown shows "Danish"
+      'Finnish': 'Finnish'  // The dropdown shows "Finnish"
     };
     
-    // Return mapped language or original if not in map
-    return languageMap[language] || language;
+    // Return mapped language or the normalized version if not in map
+    return languageMap[normalizedLanguage] || normalizedLanguage;
   }
   
   // Fill the contact information page
@@ -831,6 +852,226 @@ class VisaSchedulingFiller {
       notification.remove();
     }, 3000);
   }
+
+  // Check and show visa options popup
+  checkAndShowVisaOptionsPopup() {
+    // Check if popup was already shown this session
+    if (window.visaOptionsPopupShown) return;
+    
+    // Load visa data from storage
+    chrome.storage.local.get(['visaData'], (result) => {
+      if (result.visaData && result.visaData.applicant) {
+        const data = result.visaData.applicant;
+        
+        // Check if we have visa options data
+        if (data.atlas_visa_type || data.atlas_post || data.atlas_post_visa_category || 
+            data.atlas_visa_class || data.atlas_petitioner_name || data.atlas_ds_160_confirmation_number) {
+          this.showVisaOptionsPopup(data);
+          window.visaOptionsPopupShown = true;
+        }
+      }
+    });
+  }
+
+  // Show visa options helper popup
+  showVisaOptionsPopup(data) {
+    // Remove existing popup if any
+    const existingPopup = document.getElementById('visa-options-helper-popup');
+    if (existingPopup) existingPopup.remove();
+    
+    // Create popup container
+    const popup = document.createElement('div');
+    popup.id = 'visa-options-helper-popup';
+    popup.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 400px;
+      background: white;
+      border: 2px solid #003366;
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      z-index: 99999;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 14px;
+      color: #333;
+      cursor: move;
+    `;
+    
+    // Create popup content
+    popup.innerHTML = `
+      <div id="popup-header" style="background: #003366; color: white; padding: 12px 15px; border-radius: 6px 6px 0 0; display: flex; justify-content: space-between; align-items: center; cursor: move;">
+        <span style="font-weight: 600; font-size: 16px;">📋 Visa Options Information</span>
+        <div>
+          <button id="minimize-popup" style="background: none; border: none; color: white; font-size: 20px; cursor: pointer; padding: 0 5px;">−</button>
+          <button id="close-popup" style="background: none; border: none; color: white; font-size: 20px; cursor: pointer; padding: 0 5px;">×</button>
+        </div>
+      </div>
+      <div id="popup-content" style="padding: 15px;">
+        <div style="background: #FFF3CD; padding: 10px; border-radius: 4px; margin-bottom: 15px; border-left: 4px solid #FFC107;">
+          <strong>ℹ️ Manual Selection Required</strong><br>
+          <small>Please select the matching options from the dropdowns based on the information below.</small>
+        </div>
+        
+        ${this.formatVisaOptionsContent(data)}
+        
+        <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #e0e0e0; display: flex; gap: 10px;">
+          <button id="copy-all-btn" style="flex: 1; padding: 8px; background: #003366; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 500;">
+            Copy All
+          </button>
+          <button id="refresh-data-btn" style="flex: 1; padding: 8px; background: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 500;">
+            Refresh Data
+          </button>
+        </div>
+      </div>
+    `;
+    
+    document.body.appendChild(popup);
+    
+    // Add event listeners
+    document.getElementById('close-popup').addEventListener('click', () => {
+      popup.remove();
+    });
+    
+    document.getElementById('minimize-popup').addEventListener('click', () => {
+      const content = document.getElementById('popup-content');
+      if (content.style.display === 'none') {
+        content.style.display = 'block';
+        popup.style.width = '400px';
+      } else {
+        content.style.display = 'none';
+        popup.style.width = 'auto';
+      }
+    });
+    
+    document.getElementById('copy-all-btn').addEventListener('click', () => {
+      const text = this.formatVisaOptionsForCopy(data);
+      navigator.clipboard.writeText(text).then(() => {
+        this.showNotification('Visa options copied to clipboard!');
+      });
+    });
+    
+    document.getElementById('refresh-data-btn').addEventListener('click', () => {
+      chrome.storage.local.get(['visaData'], (result) => {
+        if (result.visaData && result.visaData.applicant) {
+          popup.remove();
+          this.showVisaOptionsPopup(result.visaData.applicant);
+        }
+      });
+    });
+    
+    // Make popup draggable
+    this.makeDraggable(popup);
+  }
+  
+  // Make element draggable
+  makeDraggable(element) {
+    let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+    const header = document.getElementById('popup-header');
+    
+    if (header) {
+      header.onmousedown = dragMouseDown;
+    } else {
+      element.onmousedown = dragMouseDown;
+    }
+    
+    function dragMouseDown(e) {
+      e = e || window.event;
+      e.preventDefault();
+      pos3 = e.clientX;
+      pos4 = e.clientY;
+      document.onmouseup = closeDragElement;
+      document.onmousemove = elementDrag;
+    }
+    
+    function elementDrag(e) {
+      e = e || window.event;
+      e.preventDefault();
+      pos1 = pos3 - e.clientX;
+      pos2 = pos4 - e.clientY;
+      pos3 = e.clientX;
+      pos4 = e.clientY;
+      element.style.top = (element.offsetTop - pos2) + "px";
+      element.style.left = (element.offsetLeft - pos1) + "px";
+    }
+    
+    function closeDragElement() {
+      document.onmouseup = null;
+      document.onmousemove = null;
+    }
+  }
+
+  // Format visa options content for display
+  formatVisaOptionsContent(data) {
+    const sections = [];
+    
+    // Visa type and embassy
+    if (data.atlas_visa_type || data.atlas_post || data.atlas_first_name || data.atlas_last_name) {
+      sections.push(`
+        <div style="margin-bottom: 12px;">
+          <div style="font-weight: 600; color: #003366; margin-bottom: 5px;">Basic Information</div>
+          ${data.atlas_first_name || data.atlas_last_name ? `<div style="padding: 3px 0;"><strong>Applicant:</strong> ${data.atlas_first_name || ''} ${data.atlas_last_name || ''}</div>` : ''}
+          ${data.atlas_visa_type ? `<div style="padding: 3px 0;"><strong>Visa Type:</strong> ${data.atlas_visa_type}</div>` : ''}
+          ${data.atlas_post ? `<div style="padding: 3px 0;"><strong>Embassy/Consulate:</strong> ${data.atlas_post}</div>` : ''}
+        </div>
+      `);
+    }
+    
+    // Visa category and class
+    if (data.atlas_post_visa_category || data.atlas_visa_class || data.atlas_visa_priority) {
+      sections.push(`
+        <div style="margin-bottom: 12px;">
+          <div style="font-weight: 600; color: #003366; margin-bottom: 5px;">Visa Classification</div>
+          ${data.atlas_post_visa_category ? `<div style="padding: 3px 0;"><strong>Category:</strong> ${data.atlas_post_visa_category}</div>` : ''}
+          ${data.atlas_visa_class ? `<div style="padding: 3px 0;"><strong>Class:</strong> ${data.atlas_visa_class}</div>` : ''}
+          ${data.atlas_visa_priority ? `<div style="padding: 3px 0;"><strong>Priority:</strong> ${data.atlas_visa_priority}</div>` : ''}
+        </div>
+      `);
+    }
+    
+    // Petition information (for work visas)
+    if (data.atlas_petitioner_name || data.atlas_petition_receipt_number) {
+      sections.push(`
+        <div style="margin-bottom: 12px;">
+          <div style="font-weight: 600; color: #003366; margin-bottom: 5px;">Petition Information</div>
+          ${data.atlas_petitioner_name ? `<div style="padding: 3px 0;"><strong>Petitioner:</strong> ${data.atlas_petitioner_name}</div>` : ''}
+          ${data.atlas_petition_receipt_number ? `<div style="padding: 3px 0;"><strong>Receipt #:</strong> ${data.atlas_petition_receipt_number}</div>` : ''}
+        </div>
+      `);
+    }
+    
+    // Additional information
+    if (data.atlas_ds_160_confirmation_number || data.atlas_sevis_number || data.atlas_language_of_interview) {
+      sections.push(`
+        <div style="margin-bottom: 12px;">
+          <div style="font-weight: 600; color: #003366; margin-bottom: 5px;">Additional Information</div>
+          ${data.atlas_ds_160_confirmation_number ? `<div style="padding: 3px 0;"><strong>DS-160 Confirmation:</strong> ${data.atlas_ds_160_confirmation_number}</div>` : ''}
+          ${data.atlas_sevis_number ? `<div style="padding: 3px 0;"><strong>SEVIS Number:</strong> ${data.atlas_sevis_number}</div>` : ''}
+          ${data.atlas_language_of_interview ? `<div style="padding: 3px 0;"><strong>Interview Language:</strong> ${data.atlas_language_of_interview}</div>` : ''}
+        </div>
+      `);
+    }
+    
+    return sections.join('') || '<div style="color: #666;">No visa options data available</div>';
+  }
+
+  // Format visa options for copying
+  formatVisaOptionsForCopy(data) {
+    const lines = [];
+    
+    if (data.atlas_visa_type) lines.push(`Visa Type: ${data.atlas_visa_type}`);
+    if (data.atlas_post) lines.push(`Embassy/Consulate: ${data.atlas_post}`);
+    if (data.atlas_post_visa_category) lines.push(`Category: ${data.atlas_post_visa_category}`);
+    if (data.atlas_visa_class) lines.push(`Class: ${data.atlas_visa_class}`);
+    if (data.atlas_visa_priority) lines.push(`Priority: ${data.atlas_visa_priority}`);
+    if (data.atlas_petitioner_name) lines.push(`Petitioner: ${data.atlas_petitioner_name}`);
+    if (data.atlas_petition_receipt_number) lines.push(`Receipt Number: ${data.atlas_petition_receipt_number}`);
+    if (data.atlas_ds_160_confirmation_number) lines.push(`DS-160 Confirmation: ${data.atlas_ds_160_confirmation_number}`);
+    if (data.atlas_sevis_number) lines.push(`SEVIS Number: ${data.atlas_sevis_number}`);
+    if (data.atlas_language_of_interview) lines.push(`Interview Language: ${data.atlas_language_of_interview}`);
+    
+    return lines.join('\n');
+  }
 }
 
 // Initialize the filler
@@ -838,7 +1079,7 @@ const visaFiller = new VisaSchedulingFiller();
 
 // Add indicator that extension is active
 const indicator = document.createElement('div');
-indicator.innerHTML = '✓ Visa Filler v1.0.9 Active';
+indicator.innerHTML = '✓ Visa Filler v1.1.2 Active';
 indicator.style.cssText = `
   position: fixed;
   bottom: 20px;

@@ -193,8 +193,8 @@ document.getElementById('fillSelectedPersonBtn').addEventListener('click', async
   // Get current tab
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   
-  if (!tab.url || (!tab.url.includes('usvisascheduling.com') && !tab.url.includes('ais.usvisa-info.com'))) {
-    showStatus('Please navigate to the US Visa Scheduling form first', 'error');
+  if (!tab.url || (!tab.url.includes('usvisascheduling.com') && !tab.url.includes('ais.usvisa-info.com') && !tab.url.includes('ayobaspremium.jp'))) {
+    showStatus('Please navigate to the US Visa Scheduling or Payment form first', 'error');
     return;
   }
   
@@ -231,8 +231,16 @@ document.getElementById('fillSelectedPersonBtn').addEventListener('click', async
         const personName = personId === 'main_applicant' ? 'Main Applicant' : 
                           (personData.displayName || `${personData.firstname} ${personData.lastname}`);
         showStatus(`Filled form with ${personName}`, 'success');
+        // Auto-close popup after successful fill to avoid covering form fields
+        setTimeout(() => {
+          window.close();
+        }, 1500);
       } else {
         showStatus('Form filling completed. Check the page.', 'info');
+        // Auto-close popup after completion
+        setTimeout(() => {
+          window.close();
+        }, 2000);
       }
     });
   }, 100);

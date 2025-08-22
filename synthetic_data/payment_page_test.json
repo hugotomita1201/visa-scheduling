@@ -1,0 +1,38 @@
+{
+  "applicant": {
+    "payment_amount": "39750",
+    "payment_confirmation": "JPNL6W9Q6S4",
+    "receipt": "JPNL6W9Q6S4",
+    "amount": "39750",
+    "email": "payment@example.com",
+    "reemail": "payment@example.com",
+    "name_first": "Takeshi",
+    "name_last": "Yamamoto",
+    "firstname": "Takeshi",
+    "lastname": "Yamamoto",
+    "postal_code": "150-0002",
+    "region": "Tokyo",
+    "prefecture": "Tokyo",
+    "city": "Shibuya Ward",
+    "municipality": "Shibuya Ward",
+    "street": "3-14-7 Shibuya",
+    "street2": "Apt 502",
+    "apartment": "Apt 502",
+    "phone": "09012345678",
+    "accept_terms": true,
+    "confirm_details": true,
+    
+    "comment_notes": "Payment page test - Email should NOT be applicant's real email",
+    
+    "atlas_first_name": "Takeshi",
+    "atlas_last_name": "Yamamoto",
+    "atlas_email": "takeshi.yamamoto@example.com",
+    "atlas_emailaddress1": "takeshi.yamamoto@example.com",
+    "atlas_mailing_postal_code": "150-0002",
+    "atlas_mailing_state": "Tokyo",
+    "atlas_mailing_city": "Shibuya Ward",
+    "atlas_mailing_street": "3-14-7 Shibuya",
+    "atlas_mobile_phone": "09012345678",
+    "atlas_home_phone": "0356789012"
+  }
+}

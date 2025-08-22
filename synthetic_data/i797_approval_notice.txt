@@ -1,0 +1,50 @@
+================================================================================
+            UNITED STATES DEPARTMENT OF HOMELAND SECURITY
+                U.S. Citizenship and Immigration Services
+                        I-797 APPROVAL NOTICE
+================================================================================
+
+Receipt Number: MSC2290123456
+Priority Date: December 1, 2024
+Notice Date: January 5, 2025
+Case Type: I-129
+Petition for Nonimmigrant Worker
+
+PETITIONER INFORMATION
+---------------------
+Name: TECHCORP JAPAN INC.
+Address: 100 Technology Drive, Suite 500
+City, State, ZIP: San Francisco, CA 94105
+Phone: (415) 555-0100
+
+BENEFICIARY INFORMATION
+----------------------
+Name: YAMAMOTO, TAKESHI
+Date of Birth: May 15, 1985
+Country of Birth: Japan
+Classification Sought: H-1B Specialty Occupation
+
+VALIDITY PERIOD
+--------------
+Valid From: April 1, 2025
+Valid Until: March 31, 2028
+
+NOTICE DETAILS
+-------------
+The above petition has been approved for the classification indicated above.
+The beneficiary may apply for a visa abroad at a U.S. Embassy or Consulate.
+
+Consulate: U.S. Embassy Tokyo, Japan
+Class Requested: H1B
+Job Title: Senior Software Engineer
+SOC Code: 15-1252
+LCA Number: I-200-24001-123456
+Wage Level: Level III
+
+ADDITIONAL INFORMATION
+---------------------
+- This notice does not grant any immigration status or benefit
+- The beneficiary must be admitted to the United States before employment begins
+- Dependents may apply for H-4 status
+
+================================================================================

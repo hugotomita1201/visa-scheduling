@@ -1,0 +1,38 @@
+================================================================================
+                        PASSPORT - JAPANESE GOVERNMENT
+================================================================================
+
+日本国 / JAPAN
+旅券 / PASSPORT
+
+Type: P (Personal)
+Country Code: JPN
+Passport Number: TK1234567
+
+Surname/姓: YAMAMOTO
+Given Names/名: TAKESHI
+
+Nationality/国籍: JAPAN
+Date of Birth/生年月日: 15 MAY 1985
+Sex/性別: M / 男
+Place of Birth/本籍: TOKYO
+
+Date of Issue/発行年月日: 20 JAN 2023
+Date of Expiry/有効期限満了日: 20 JAN 2033
+
+Issuing Authority/発行官庁: MINISTRY OF FOREIGN AFFAIRS
+Signature of Bearer/所持人自署: [Takeshi Yamamoto]
+
+Machine Readable Zone:
+P<JPNYAMAMOTO<<TAKESHI<<<<<<<<<<<<<<<<<<<<<
+TK1234567<JPN8505150M3301200<<<<<<<<<<<<<<<
+
+================================================================================
+                         VISA PAGES - BLANK
+================================================================================
+
+Pages 4-35: Available for visas and entry/exit stamps
+No previous US visa recorded
+No current valid visas
+
+================================================================================

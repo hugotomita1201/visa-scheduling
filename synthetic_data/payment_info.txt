@@ -1,0 +1,35 @@
+================================================================================
+                    AYOBAS PREMIUM PAYMENT INFORMATION
+                         SYNTHETIC TEST DATA
+================================================================================
+
+PAYMENT DETAILS
+--------------
+Price: ¥39,750
+Payment Confirmation Number: JPNL6W9Q6S4
+Payment Date: 01/20/2025
+Payment Method: Credit Card
+
+BILLING INFORMATION
+------------------
+Email: payment.processor@ayobaspremium.jp (DO NOT USE APPLICANT'S EMAIL)
+Re-enter Email: payment.processor@ayobaspremium.jp
+
+Given Name: Takeshi (FROM MAIN APPLICANT)
+Last Name: Yamamoto (FROM MAIN APPLICANT)
+
+Post Code: 150-0002 (FROM MAIN APPLICANT)
+Prefecture: Tokyo (FROM MAIN APPLICANT)
+Municipality: Shibuya Ward (FROM MAIN APPLICANT)
+Address: 3-14-7 Shibuya (FROM MAIN APPLICANT)
+Apartment/Room: Apt 502 (FROM MAIN APPLICANT)
+
+Phone: +81 90-1234-5678 (FROM MAIN APPLICANT)
+
+IMPORTANT NOTES:
+- Email field MUST NOT be the applicant's actual email
+- All other fields should use main applicant's information
+- Standard visa fee is ¥39,750 per person
+- Payment confirmation number format: JPXXXXXXXXX
+
+================================================================================

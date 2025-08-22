@@ -1,0 +1,38 @@
+================================================================================
+                        PASSPORT - JAPANESE GOVERNMENT
+================================================================================
+
+日本国 / JAPAN
+旅券 / PASSPORT
+
+Type: P (Personal)
+Country Code: JPN
+Passport Number: TO2345678
+
+Surname/姓: YAMAMOTO
+Given Names/名: YUKI
+
+Nationality/国籍: JAPAN
+Date of Birth/生年月日: 22 AUG 1987
+Sex/性別: F / 女
+Place of Birth/本籍: OSAKA
+
+Date of Issue/発行年月日: 15 MAR 2024
+Date of Expiry/有効期限満了日: 15 MAR 2034
+
+Issuing Authority/発行官庁: MINISTRY OF FOREIGN AFFAIRS
+Signature of Bearer/所持人自署: [Yuki Yamamoto]
+
+Machine Readable Zone:
+P<JPNYAMAMOTO<<YUKI<<<<<<<<<<<<<<<<<<<<<<<<<
+TO2345678<JPN8708220F3403150<<<<<<<<<<<<<<<
+
+================================================================================
+                         VISA PAGES - BLANK
+================================================================================
+
+Pages 4-35: Available for visas and entry/exit stamps
+No previous US visa recorded
+No current valid visas
+
+================================================================================

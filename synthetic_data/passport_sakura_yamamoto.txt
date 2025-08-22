@@ -1,0 +1,40 @@
+================================================================================
+                        PASSPORT - JAPANESE GOVERNMENT
+================================================================================
+
+日本国 / JAPAN
+旅券 / PASSPORT
+
+Type: P (Personal)
+Country Code: JPN
+Passport Number: TJ4567890
+
+Surname/姓: YAMAMOTO
+Given Names/名: SAKURA
+
+Nationality/国籍: JAPAN
+Date of Birth/生年月日: 18 JUL 2014
+Sex/性別: F / 女
+Place of Birth/本籍: TOKYO
+
+Date of Issue/発行年月日: 20 SEP 2024
+Date of Expiry/有効期限満了日: 20 SEP 2029
+
+Issuing Authority/発行官庁: MINISTRY OF FOREIGN AFFAIRS
+Signature of Bearer/所持人自署: [Sakura Yamamoto]
+
+Machine Readable Zone:
+P<JPNYAMAMOTO<<SAKURA<<<<<<<<<<<<<<<<<<<<<<<
+TJ4567890<JPN1407180F2909200<<<<<<<<<<<<<<<
+
+================================================================================
+                         VISA PAGES - BLANK
+================================================================================
+
+Pages 4-35: Available for visas and entry/exit stamps
+No previous US visa recorded
+No current valid visas
+
+Note: Child passport (5-year validity)
+
+================================================================================

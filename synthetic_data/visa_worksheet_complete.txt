@@ -1,0 +1,114 @@
+================================================================================
+                    VISA INTERVIEW APPOINTMENT INFORMATION
+                         SYNTHETIC TEST DATA - COMPLETE WORKSHEET
+================================================================================
+
+APPLICANT INFORMATION
+---------------------
+Full Name: Takeshi Yamamoto
+First Name: Takeshi
+Last Name: Yamamoto
+National ID: Not Applicable (Japanese citizen)
+Birth Country: Japan
+Sex: Male
+
+Travel to Restricted Countries: No
+US Overstay/Arrests: No
+Applied for US Visa with Current Passport: No
+Preferred Application Method: Interview at U.S. Embassy in Tokyo
+
+PREFERRED INTERVIEW DATES
+------------------------
+First Choice: 03/15/2025
+Second Choice: 03/22/2025
+Third Choice: 03/29/2025
+Other Requests: Morning appointment preferred (9:00-12:00)
+Intended Departure Date: 04/10/2025
+
+CONTACT INFORMATION
+------------------
+Home Number: 03-5678-9012
+Mobile Number: 090-1234-5678
+Email: takeshi.yamamoto@example.com
+
+DOCUMENT DELIVERY METHOD
+-----------------------
+Mailing Address:
+Street Name: 3-14-7 Shibuya
+Unit Number: Apt 502
+City: Shibuya-ku
+Province: Tokyo
+Postal Code: 150-0002
+Is Current Residential Address: Yes - Someone must be home for delivery
+Pick up at CGI Center: No
+
+================================================================================
+                            CO-APPLICANTS
+================================================================================
+
+SPOUSE INFORMATION
+-----------------
+Name: Yuki Yamamoto
+First Name: Yuki
+Last Name: Yamamoto
+National ID: Not Applicable (Japanese citizen)
+Birth Country: Japan
+Sex: Female
+Relationship: Spouse
+
+Travel to Restricted Countries: No
+US Overstay/Arrests: No
+Applied for US Visa with Current Passport: No
+
+Day Phone: 03-5678-9012
+Unique Email: yuki.yamamoto@example.com
+
+--------------------------------------------------------------------------------
+
+CHILD 1 INFORMATION
+------------------
+Name: Haruto Yamamoto
+First Name: Haruto
+Last Name: Yamamoto
+National ID: Not Applicable (Japanese citizen)
+Birth Country: Japan
+Sex: Male
+Relationship: Son
+
+Travel to Restricted Countries: No
+US Overstay/Arrests: No
+Applied for US Visa with Current Passport: No
+
+Phone: 090-1234-5678 (Parent's phone)
+Unique Email: takeshi.yamamoto+haruto@example.com
+
+--------------------------------------------------------------------------------
+
+CHILD 2 INFORMATION
+------------------
+Name: Sakura Yamamoto
+First Name: Sakura
+Last Name: Yamamoto
+National ID: Not Applicable (Japanese citizen)
+Birth Country: Japan
+Sex: Female
+Relationship: Daughter
+
+Travel to Restricted Countries: No
+US Overstay/Arrests: No
+Applied for US Visa with Current Passport: No
+
+Phone: 090-1234-5678 (Parent's phone)
+Unique Email: takeshi.yamamoto+sakura@example.com
+
+================================================================================
+                         ADDITIONAL COMMENTS
+================================================================================
+
+Family of four applying together for H-1B (primary) and H-4 (dependents) visas.
+All family members will travel together to the United States.
+Children are under 14 years old and eligible for mail-in application if needed.
+
+================================================================================
+                            END OF WORKSHEET
+================================================================================

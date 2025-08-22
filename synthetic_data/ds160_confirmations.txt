@@ -1,0 +1,56 @@
+================================================================================
+                    DS-160 CONFIRMATION PAGES
+                         SYNTHETIC TEST DATA
+================================================================================
+
+PRIMARY APPLICANT - DS-160 CONFIRMATION
+---------------------------------------
+Confirmation Number: AA0023456789
+Application ID: 290876543
+Surname: YAMAMOTO
+Given Name: TAKESHI
+Date of Birth: 15-MAY-1985
+Passport Number: TK1234567
+Barcode: [||||||||||||||||||||]
+Application Date: January 10, 2025
+
+--------------------------------------------------------------------------------
+
+SPOUSE - DS-160 CONFIRMATION
+----------------------------
+Confirmation Number: AA0023456790
+Application ID: 290876544
+Surname: YAMAMOTO
+Given Name: YUKI
+Date of Birth: 22-AUG-1987
+Passport Number: TO2345678
+Barcode: [||||||||||||||||||||]
+Application Date: January 10, 2025
+
+--------------------------------------------------------------------------------
+
+CHILD 1 - DS-160 CONFIRMATION
+-----------------------------
+Confirmation Number: AA0023456791
+Application ID: 290876545
+Surname: YAMAMOTO
+Given Name: HARUTO
+Date of Birth: 10-MAR-2012
+Passport Number: TJ3456789
+Barcode: [||||||||||||||||||||]
+Application Date: January 10, 2025
+
+--------------------------------------------------------------------------------
+
+CHILD 2 - DS-160 CONFIRMATION
+-----------------------------
+Confirmation Number: AA0023456792
+Application ID: 290876546
+Surname: YAMAMOTO
+Given Name: SAKURA
+Date of Birth: 18-JUL-2014
+Passport Number: TJ4567890
+Barcode: [||||||||||||||||||||]
+Application Date: January 10, 2025
+
+================================================================================
