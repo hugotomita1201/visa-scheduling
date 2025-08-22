@@ -404,8 +404,14 @@ class VisaSchedulingFiller {
     Object.keys(data).forEach(key => {
       const value = data[key];
       if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
+        // Special handling for language field - MUST map to native script
+        if (key === 'adx_preferredlanguageid') {
+          const mappedLanguage = this.getLanguageMapping(value);
+          console.log(`Mapping language "${value}" to "${mappedLanguage}" for field ${key}`);
+          this.fillDropdownByText(key, mappedLanguage);
+        }
         // Check if it's a dropdown field (by looking for country_code or known dropdowns)
-        if (key.includes('country') || key.includes('nationality') || key.includes('country_code')) {
+        else if (key.includes('country') || key.includes('nationality') || key.includes('country_code')) {
           this.fillDropdownByText(key, value);
         } else {
           this.fillField(key, value);
@@ -733,36 +739,40 @@ class VisaSchedulingFiller {
   }
   
   // Language mapping for preferred language dropdown
+  // ⚠️ WARNING: DO NOT CHANGE THESE MAPPINGS! ⚠️
+  // These MUST match EXACTLY what appears in the dropdown on the actual website
+  // The dropdown shows language names in their NATIVE SCRIPTS (e.g., 日本語 not "Japanese")
+  // Changing these will break the form filling functionality
   getLanguageMapping(language) {
     if (!language) return 'English';
     
     // Normalize the input - handle case variations (ENGLISH, English, english)
     const normalizedLanguage = language.charAt(0).toUpperCase() + language.slice(1).toLowerCase();
     
-    // Map to the actual text shown in the dropdown options
+    // ⚠️ DO NOT MODIFY THE VALUES BELOW - They must match the dropdown text EXACTLY ⚠️
     const languageMap = {
-      'Japanese': 'Japanese',  // The dropdown shows "Japanese" not "日本語"
+      'Japanese': '日本語',  // The dropdown shows "日本語" 
       'English': 'English',
       'Chinese': '中文(中国)',
       'Chinese (Taiwan)': '中文(台灣)',
       'Korean': '한국어',
       'Spanish': 'español',
-      'French': 'French',  // The dropdown shows "French"
-      'German': 'German',  // The dropdown shows "German"
-      'Russian': 'Russian',  // The dropdown shows "Russian"
-      'Arabic': 'Arabic',  // The dropdown shows "Arabic"
-      'Thai': 'Thailand',  // The dropdown shows "Thailand"
-      'Vietnamese': 'Vietnamese',  // The dropdown shows "Vietnamese"
-      'Turkish': 'Turkish',  // The dropdown shows "Turkish"
+      'French': 'français',  // The dropdown shows "français"
+      'German': 'Deutsch',  // The dropdown shows "Deutsch"
+      'Russian': 'русский',  // The dropdown shows "русский"
+      'Arabic': 'العربية',  // The dropdown shows "العربية"
+      'Thai': 'ไทย',  // The dropdown shows "ไทย"
+      'Vietnamese': 'Tiếng Việt',  // The dropdown shows "Tiếng Việt"
+      'Turkish': 'Türkçe',  // The dropdown shows "Türkçe"
       'Portuguese': 'português',
       'Italian': 'italiano',
       'Hindi': 'हिंदी',
-      'Indonesian': 'Indonesian',  // The dropdown shows "Indonesian"
-      'Malay': 'Malay',  // The dropdown shows "Malay"
+      'Indonesian': 'Bahasa Indonesia',  // The dropdown shows "Bahasa Indonesia"
+      'Malay': 'Bahasa Melayu',  // The dropdown shows "Bahasa Melayu"
       'Filipino': 'Filipino',
       'Urdu': 'Urdu',
       'Tamil': 'Tamil',
-      'Polish': 'Polish',  // The dropdown shows "Polish"
+      'Polish': 'polski',  // The dropdown shows "polski"
       'Swedish': 'Swedish',  // The dropdown shows "Swedish"
       'Norwegian': 'Norwegian Bokmål',  // The dropdown shows "Norwegian Bokmål"
       'Danish': 'Danish',  // The dropdown shows "Danish"
@@ -776,6 +786,7 @@ class VisaSchedulingFiller {
   // Fill the contact information page
   fillDependentContactPage(dependent) {
     console.log('Filling Dependent Contact page');
+    console.log('Language field value:', dependent.adx_preferredlanguageid);
     
     this.fillField('firstname', dependent.firstname);
     this.fillField('lastname', dependent.lastname);
@@ -783,6 +794,7 @@ class VisaSchedulingFiller {
     
     // Map language to native script before filling
     const language = this.getLanguageMapping(dependent.adx_preferredlanguageid) || 'English';
+    console.log('Mapped language:', language);
     this.fillDropdownByText('adx_preferredlanguageid', language);
     
     // Show success message
