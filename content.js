@@ -378,55 +378,47 @@ class VisaSchedulingFiller {
   
   // Fill payment page (Ayobas Premium)
   fillPaymentPage(data) {
-    // Payment amount - extract from price or use provided amount
-    if (data.payment_amount || data.amount) {
-      this.fillField('amount', data.payment_amount || data.amount);
+    // DO NOT FILL amount or receipt fields - user will enter manually
+    // Skip these fields even if data is present
+    
+    // Email fields - use the generated email if present, otherwise fall back to atlas email
+    const email = data.email || data.atlas_email || data.atlas_emailaddress1;
+    if (email) {
+      this.fillField('email', email);
+      this.fillField('reemail', email);  // Same email for confirmation
     }
     
-    // Payment confirmation/receipt number
-    if (data.payment_confirmation || data.receipt || data.confirmation_number) {
-      this.fillField('receipt', data.payment_confirmation || data.receipt || data.confirmation_number);
-    }
+    // Name fields - prioritize payment-specific fields, then fall back to atlas fields
+    this.fillField('name_first', data.name_first || data.atlas_first_name || data.firstname);
+    this.fillField('name_last', data.name_last || data.atlas_last_name || data.lastname);
     
-    // Email fields
-    this.fillField('email', data.email || data.atlas_email || data.atlas_emailaddress1);
-    this.fillField('reemail', data.email || data.atlas_email || data.atlas_emailaddress1);
+    // Address fields - use payment-specific fields if available, otherwise atlas fields
+    this.fillField('postal_code', data.postal_code || data.atlas_mailing_postal_code);
+    this.fillField('region', data.region || data.atlas_mailing_state);
+    this.fillField('city', data.city || data.atlas_mailing_city);
+    this.fillField('street', data.street || data.atlas_mailing_street);
+    this.fillField('street2', data.street2 || ''); // Apartment/unit if extracted
     
-    // Name fields
-    this.fillField('name_first', data.name_first || data.firstname || data.firstName || data.first_name || data.atlas_first_name);
-    this.fillField('name_last', data.name_last || data.lastname || data.lastName || data.last_name || data.atlas_last_name);
-    
-    // Preferred language - this appears to be a dropdown on the payment page
-    if (data.adx_preferredlanguageid || data.preferred_language) {
-      const language = this.getLanguageMapping(data.adx_preferredlanguageid || data.preferred_language);
-      this.fillDropdownByText('adx_preferredlanguageid', language);
-    }
-    
-    // Japanese address fields
-    this.fillField('postal_code', data.postal_code || data.zip_code || data.atlas_mailing_postal_code);
-    this.fillField('region', data.prefecture || data.region || data.state || data.atlas_mailing_state);
-    this.fillField('city', data.city || data.municipality || data.atlas_mailing_city);
-    this.fillField('street', data.street || data.address || data.atlas_mailing_street);
-    this.fillField('street2', data.apartment || data.street2 || data.room_number);
-    
-    // Phone number
-    if (data.phone || data.atlas_home_phone || data.atlas_mobile_phone) {
-      const phone = data.phone || data.atlas_mobile_phone || data.atlas_home_phone;
+    // Phone number - use payment-specific phone or fall back to atlas mobile/home
+    const phone = data.phone || data.atlas_mobile_phone || data.atlas_home_phone;
+    if (phone) {
       this.fillField('phone', phone);
     }
     
-    // Check any required checkboxes
+    // Check any required checkboxes (if they exist and are visible)
     const policyCheckbox = document.getElementById('ckb_policy');
-    if (policyCheckbox && data.accept_terms !== false) {
+    if (policyCheckbox && policyCheckbox.offsetParent !== null && data.accept_terms !== false) {
       policyCheckbox.checked = true;
       policyCheckbox.dispatchEvent(new Event('change', { bubbles: true }));
     }
     
     const confirmCheckbox = document.getElementById('chbx_confirm');
-    if (confirmCheckbox && data.confirm_details !== false) {
+    if (confirmCheckbox && confirmCheckbox.offsetParent !== null && data.confirm_details !== false) {
       confirmCheckbox.checked = true;
       confirmCheckbox.dispatchEvent(new Event('change', { bubbles: true }));
     }
+    
+    this.showNotification('Payment form filled (except amount & receipt)');
   }
 
   // Fill contact information
