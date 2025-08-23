@@ -110,6 +110,8 @@ class VisaSchedulingFiller {
       return 'contact_info';
     } else if (path.includes('schedule') || title.includes('appointment')) {
       return 'appointment';
+    } else if (path.includes('document_delivery') || title.includes('document delivery') || title.includes('delivery options')) {
+      return 'document_delivery';
     }
     
     return 'unknown';
@@ -220,6 +222,9 @@ class VisaSchedulingFiller {
           break;
         case 'contact_info':
           this.fillContactInfo(data);
+          break;
+        case 'document_delivery':
+          this.fillDocumentDelivery(data);
           break;
         default:
           // Try to fill any matching fields
@@ -337,24 +342,19 @@ class VisaSchedulingFiller {
 
   // Fill signup page (Atlas Auth)
   fillSignupPage(data) {
-    // Username: first letter of first name + last name + 11835
+    // Username: full first name + last name (no numbers)
     const firstName = data.givenName || data.atlas_first_name || data.firstname || '';
     const lastName = data.surname || data.atlas_last_name || data.lastname || '';
     if (firstName && lastName) {
-      const username = firstName.charAt(0).toLowerCase() + lastName.toLowerCase() + '11835';
+      const username = firstName.toLowerCase() + lastName.toLowerCase();
       this.fillField('signInName', username);
     }
     
-    // Password fields
-    const password = 'Tomitalawoffice11835?';
-    this.fillField('newPassword', password);
-    this.fillField('reenterPassword', password);
+    // Password fields - leave empty for user to create their own password
+    // User will enter their preferred password
     
-    // Email: same pattern as payment page
-    if (firstName && lastName) {
-      const email = firstName.charAt(0).toLowerCase() + lastName.toLowerCase() + '11835@tomitalawoffice.net';
-      this.fillField('email', email);
-    }
+    // Email field - leave empty for user to fill manually
+    // User will enter their preferred email
     
     // Name fields
     this.fillField('givenName', firstName);
@@ -381,12 +381,8 @@ class VisaSchedulingFiller {
     // DO NOT FILL amount or receipt fields - user will enter manually
     // Skip these fields even if data is present
     
-    // Email fields - use the generated email if present, otherwise fall back to atlas email
-    const email = data.email || data.atlas_email || data.atlas_emailaddress1;
-    if (email) {
-      this.fillField('email', email);
-      this.fillField('reemail', email);  // Same email for confirmation
-    }
+    // Email fields - leave empty for user to fill manually
+    // User will enter their preferred email for payment receipt
     
     // Name fields - prioritize payment-specific fields, then fall back to atlas fields
     this.fillField('name_first', data.name_first || data.atlas_first_name || data.firstname);
@@ -436,6 +432,34 @@ class VisaSchedulingFiller {
       this.fillField('emergency_relationship', data.emergencyContact.relationship);
     }
   }
+
+  // Fill document delivery page (premium delivery option)
+  fillDocumentDelivery(data) {
+    console.log('Filling Document Delivery page');
+    
+    // Use main applicant's mailing address for delivery
+    // Fill address fields
+    this.fillField('DDAddress', data.DDAddress || data.atlas_mailing_street || data.street || '');
+    this.fillField('DDAddress2', data.DDAddress2 || data.street2 || '');
+    this.fillField('DDAddress3', data.DDAddress3 || '');
+    this.fillField('DDCity', data.DDCity || data.atlas_mailing_city || data.city || '');
+    this.fillField('DDState', data.DDState || data.atlas_mailing_state || data.region || '');
+    this.fillField('DDPostalCode', data.DDPostalCode || data.atlas_mailing_postal_code || data.postal_code || '');
+    
+    // Handle country dropdown - use text matching like other country fields
+    const countryValue = data.document_delivery_country || data.atlas_country || 'Japan';
+    this.fillDropdownByText('document_delivery_country', countryValue);
+    
+    // Select premium delivery option if radio buttons exist
+    const premiumRadio = document.querySelector('input[type="radio"][value="premium"]');
+    if (premiumRadio) {
+      premiumRadio.checked = true;
+      premiumRadio.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+    
+    console.log('Document Delivery fields filled');
+  }
+
 
   // Generic field filling - works with atlas_ fields
   fillGenericFields(data) {

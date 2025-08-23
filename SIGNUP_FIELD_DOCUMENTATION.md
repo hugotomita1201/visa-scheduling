@@ -12,61 +12,52 @@ This document provides a comprehensive explanation of how each field in the US V
 
 ### 1. **Username (signInName)**
 **Field ID:** `signInName`  
-**Derivation Pattern:** `[first_letter_of_firstname][full_lastname]11835`  
+**Derivation Pattern:** `[full_firstname][full_lastname]`  
 **Case:** All lowercase  
 **Source:** Main applicant's name ONLY (never dependents)  
 
 **Examples:**
-- Takeshi Yamamoto → `tyamamoto11835`
-- John Smith → `jsmith11835`
-- Maria Garcia → `mgarcia11835`
-- Hiroshi Tanaka → `htanaka11835`
+- Takeshi Yamamoto → `takeshiyamamoto`
+- John Smith → `johnsmith`
+- Maria Garcia → `mariagarcia`
+- Hiroshi Tanaka → `hiroshitanaka`
 
 **Components Explained:**
-- First letter of first name (lowercase)
+- Full first name (lowercase)
 - Full last name (lowercase)
-- "11835" = Tomita Law Office address number (constant)
+- No numbers or suffixes
 
 ---
 
 ### 2. **New Password (newPassword)**
 **Field ID:** `newPassword`  
-**Value:** `Tomitalawoffice11835?`  
-**Type:** Fixed/Constant value  
-**Requirements Met:**
-- Contains uppercase letters (T)
-- Contains lowercase letters (omitalawoffice)
-- Contains numbers (11835)
-- Contains special character (?)
-- Length: 21 characters (within 8-16 requirement)
+**Value:** LEFT EMPTY - User will create their own password  
+**Type:** User-defined  
+**Requirements:**
+- User must create a password meeting system requirements
+- Typically needs uppercase, lowercase, numbers, and special characters
+- Length requirements vary by system
 
-**Note:** This password is ALWAYS the same for all applicants
+**Note:** Password field is no longer auto-filled
 
 ---
 
 ### 3. **Confirm Password (reenterPassword)**
 **Field ID:** `reenterPassword`  
-**Value:** `Tomitalawoffice11835?`  
-**Type:** Exact copy of newPassword  
+**Value:** LEFT EMPTY - User will re-enter their chosen password  
+**Type:** Must match newPassword  
 **Purpose:** Password confirmation field
 
 ---
 
 ### 4. **Email Address (email)**
 **Field ID:** `email`  
-**Derivation Pattern:** `[first_letter_of_firstname][full_lastname]11835@tomitalawoffice.net`  
-**Case:** All lowercase  
-**Source:** Main applicant's name ONLY  
+**Value:** LEFT EMPTY - User will enter manually  
+**Note:** This field is no longer auto-filled to allow users to enter their preferred email address  
 
-**Examples:**
-- Takeshi Yamamoto → `tyamamoto11835@tomitalawoffice.net`
-- John Smith → `jsmith11835@tomitalawoffice.net`
-- Maria Garcia → `mgarcia11835@tomitalawoffice.net`
-
-**Components Explained:**
-- Same username pattern as signInName
-- Domain: `@tomitalawoffice.net` (law office domain)
-- Purpose: Creates unique email per applicant while maintaining law office control
+**Previous Pattern (DEPRECATED):**
+- Was: `[first_letter][lastname]11835@tomitalawoffice.net`
+- Now: Field left blank for manual entry
 
 ---
 
@@ -186,24 +177,24 @@ Source Documents (PDF/Images)
 ### Scenario 1: Japanese Applicant
 **Input:** Takeshi Yamamoto  
 **Outputs:**
-- Username: `tyamamoto11835`
-- Email: `tyamamoto11835@tomitalawoffice.net`
-- Password: `Tomitalawoffice11835?`
+- Username: `takeshiyamamoto`
+- Email: (left empty for manual entry)
+- Password: (left empty for manual entry)
 
 ### Scenario 2: Western Name
 **Input:** John Michael Smith  
 **Outputs:**
-- Username: `jsmith11835`
-- Email: `jsmith11835@tomitalawoffice.net`
-- Password: `Tomitalawoffice11835?`
+- Username: `johnsmith`
+- Email: (left empty for manual entry)
+- Password: (left empty for manual entry)
 
 ### Scenario 3: Hispanic Name
 **Input:** Maria Elena Garcia Rodriguez  
 **Note:** System uses first surname only  
 **Outputs:**
-- Username: `mgarcia11835`
-- Email: `mgarcia11835@tomitalawoffice.net`
-- Password: `Tomitalawoffice11835?`
+- Username: `mariagarcia`
+- Email: (left empty for manual entry)
+- Password: (left empty for manual entry)
 
 ---
 
