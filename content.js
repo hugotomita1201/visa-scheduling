@@ -463,7 +463,24 @@ class VisaSchedulingFiller {
 
   // Generic field filling - works with atlas_ fields
   fillGenericFields(data) {
+    // Check page type to exclude certain fields
+    const pageType = this.detectPageType();
+    const isSignupPage = pageType === 'signup';
+    const isPaymentPage = pageType === 'payment';
+    
     Object.keys(data).forEach(key => {
+      // Skip email and password fields on signup page - user enters manually
+      if (isSignupPage && (key === 'email' || key === 'atlas_email' || key === 'newPassword' || key === 'reenterPassword')) {
+        console.log(`Skipping ${key} on signup page - user will enter manually`);
+        return;
+      }
+      
+      // Skip email fields on payment page - user enters manually
+      if (isPaymentPage && (key === 'email' || key === 'reemail' || key === 'atlas_email')) {
+        console.log(`Skipping ${key} on payment page - user will enter manually`);
+        return;
+      }
+      
       const value = data[key];
       if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
         // Special handling for language field - MUST map to native script
