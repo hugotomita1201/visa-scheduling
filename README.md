@@ -76,6 +76,7 @@ Create a JSON object with your information. The extension supports both simple f
 - **Data Persistence**: Saves your data for reuse across sessions
 - **Field Detection Tool**: See what fields are available on the current page
 - **👥 Dependent Management**: Automatic filling for multiple dependents with floating selector UI
+- **📧 Intelligent Email Field Handling**: Differentiates between signup and contact information email fields
 
 ## Supported Fields
 
@@ -96,9 +97,15 @@ Create a JSON object with your information. The extension supports both simple f
 - US Address (Street, City, State, ZIP Code)
 
 ### Contact Information
-- Email
+- **Contact Email** (atlas_email, atlas_emailaddress1) - Automatically filled for all applicants
+- **Emergency Contact Email** - Automatically filled when provided
 - Phone Numbers (Home, Mobile, Work)
-- Emergency Contact
+- Emergency Contact Details
+
+⚠️ **Note on Email Fields:**
+- **Contact information emails** (atlas_email, atlas_emailaddress1) are automatically filled for main applicant and all dependents
+- **Signup/account creation emails** (email, reemail fields) are intentionally left blank for manual entry
+- This ensures users can choose their preferred account email while still auto-filling contact information
 
 ### Family Information
 - Father's Details
@@ -116,6 +123,7 @@ Create a JSON object with your information. The extension supports both simple f
 - **Detect Fields** tab shows all fields available on the current page
 - Dropdowns are filled by matching text (e.g., "United States" not GUID values)
 - The extension shows a green indicator when active on supported sites
+- Email fields for contact information are now properly differentiated from signup fields
 
 ## Troubleshooting
 
@@ -131,6 +139,11 @@ Create a JSON object with your information. The extension supports both simple f
 3. **Data not saving?**
    - Click "Load Data" after pasting JSON
    - Check for JSON syntax errors
+
+4. **Email fields behavior?**
+   - Contact emails (atlas_email) will auto-fill
+   - Signup emails (email, reemail) remain empty for manual entry
+   - Emergency contact emails auto-fill when data is provided
 
 ## Supported Websites
 
@@ -175,14 +188,14 @@ The extension includes advanced dependent management capabilities:
 ### Supported Dependent Pages
 - **Dependent Contact Page** (`/daddcontact/`)
   - First Name, Last Name
-  - Contact Email
+  - Contact Email (properly filled with dependent's email)
   - Preferred Language
   
 - **Dependent Applicant Page** (`/dep_applicant_add/`)
   - Relationship to Applicant
   - Personal Information (Name, DOB, Nationality)
   - Passport Details
-  - Contact Information
+  - Contact Information (including email)
   - Mailing Address
   - National ID
 
@@ -191,10 +204,29 @@ The extension includes advanced dependent management capabilities:
 - Quick switching between dependents
 - Visual selector for easy dependent identification
 - Automatic page detection
+- Proper email field filling for each dependent
 
-## Version
+## Version History
 
-1.0.3 - Added dependent management feature
-1.0.2 - Fixed syntax errors
-1.0.1 - Fixed content script injection
-1.0.0 - Initial release
+### Version 1.1.2 (Latest)
+- Fixed email field differentiation between signup and contact information
+- Contact emails (atlas_email, atlas_emailaddress1) now properly fill for all applicants
+- Signup emails (email, reemail) remain empty for manual entry
+- Emergency contact emails now fill correctly
+- Improved dependent email handling
+
+### Version 1.1.1
+- Improved UI with more rounded corners for modern appearance
+- Updated all UI elements with consistent border-radius
+- Cards now have 16px rounded corners
+- Better visual consistency throughout the extension
+
+### Version 1.1.0
+- Fixed extension state being lost when navigating between pages
+- Extension now remembers selected person and active tab
+
+### Version 1.0.9
+- Fixed language dropdown not filling due to native script options
+- Added language mapping for common languages
+
+[Previous versions remain the same...]

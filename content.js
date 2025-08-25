@@ -249,9 +249,8 @@ class VisaSchedulingFiller {
     this.fillDropdownByText('atlas_country', data.atlas_country);
     this.fillDropdownByText('atlas_nationality', data.atlas_nationality);
     
-    // Contact information - SKIP EMAIL (it's read-only, set from account creation)
-    // Email field is greyed out and uses the email from account registration
-    // this.fillField('atlas_email', data.atlas_email); // REMOVED - Do not fill
+    // Contact information
+    this.fillField('atlas_email', data.atlas_email);
     this.fillDropdownByText('atlas_home_phone_country_code', data.atlas_home_phone_country_code);
     this.fillField('atlas_home_phone', data.atlas_home_phone);
     this.fillDropdownByText('atlas_mobile_phone_country_code', data.atlas_mobile_phone_country_code);
@@ -420,8 +419,8 @@ class VisaSchedulingFiller {
 
   // Fill contact information
   fillContactInfo(data) {
-    // Skip email - it's read-only and set from account creation
-    // this.fillField('email', data.email); // REMOVED
+    // Note: signup email fields are different from contact email fields
+    // Signup uses 'email', contact info uses 'atlas_email' or 'atlas_emailaddress1'
     this.fillField('phone', data.phone);
     this.fillField('mobile', data.mobile);
     this.fillField('work_phone', data.workPhone);
@@ -430,8 +429,7 @@ class VisaSchedulingFiller {
     if (data.emergencyContact) {
       this.fillField('emergency_name', data.emergencyContact.name);
       this.fillField('emergency_phone', data.emergencyContact.phone);
-      // Skip emergency email - follows same pattern as primary email
-      // this.fillField('emergency_email', data.emergencyContact.email); // REMOVED
+      this.fillField('emergency_email', data.emergencyContact.email);
       this.fillField('emergency_relationship', data.emergencyContact.relationship);
     }
   }
@@ -471,9 +469,9 @@ class VisaSchedulingFiller {
     const isSignupPage = pageType === 'signup';
     
     Object.keys(data).forEach(key => {
-      // ALWAYS skip email fields - email is configured at account creation and read-only elsewhere
-      if (key === 'email' || key === 'atlas_email' || key === 'reemail' || key === 'atlas_emailaddress1') {
-        console.log(`Skipping ${key} - email is set at account creation and is read-only`);
+      // Skip signup email fields only - these are for account creation
+      if (key === 'email' || key === 'reemail') {
+        console.log(`Skipping ${key} - signup email field, user enters manually`);
         return;
       }
       
@@ -871,8 +869,7 @@ class VisaSchedulingFiller {
     
     this.fillField('firstname', dependent.firstname);
     this.fillField('lastname', dependent.lastname);
-    // Skip email - it's configured at account creation
-    // this.fillField('atlas_emailaddress1', dependent.atlas_emailaddress1); // REMOVED
+    this.fillField('atlas_emailaddress1', dependent.atlas_emailaddress1);
     
     // Map language to native script before filling
     const language = this.getLanguageMapping(dependent.adx_preferredlanguageid) || 'English';
@@ -908,8 +905,7 @@ class VisaSchedulingFiller {
     this.fillField('atlas_home_phone', dependent.atlas_home_phone);
     this.fillDropdownByText('atlas_mobile_phone_country_code', dependent.atlas_mobile_phone_country_code);
     this.fillField('atlas_mobile_phone', dependent.atlas_mobile_phone);
-    // Skip email - it's configured at account creation
-    // this.fillField('atlas_email', dependent.atlas_email); // REMOVED
+    this.fillField('atlas_email', dependent.atlas_email);
     
     // Address
     this.fillField('atlas_mailing_street', dependent.atlas_mailing_street);

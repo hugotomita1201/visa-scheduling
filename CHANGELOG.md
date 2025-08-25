@@ -1,6 +1,14 @@
 # Changelog
 
-## Version 1.1.1 (Current)
+## Version 1.1.2 (Current)
+- Fixed email field differentiation between signup and contact information
+- Contact information email fields (atlas_email, atlas_emailaddress1) now properly auto-fill for all applicants
+- Signup/account creation email fields (email, reemail) are intentionally left blank for manual entry
+- Emergency contact emails now fill correctly when data is provided
+- Improved dependent email handling - each dependent's email is properly filled in their forms
+- Added comprehensive documentation about email field handling
+
+## Version 1.1.1
 - Improved UI with more rounded corners for modern appearance
 - Updated all UI elements with consistent border-radius
 - Cards now have 16px rounded corners
