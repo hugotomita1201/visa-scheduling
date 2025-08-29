@@ -750,6 +750,32 @@ class VisaSchedulingFiller {
     console.log('Dependent selector created');
   }
   
+  // Fill the selected dependent from the popup selector
+  fillSelectedDependent() {
+    const selected = document.querySelector('input[name="dependent"]:checked');
+    if (!selected) {
+      alert('Please select a dependent first');
+      return;
+    }
+    
+    const selectedRef = selected.value; // e.g., "dep_1"
+    const dependent = this.dependents.find(d => d.id === selectedRef);
+    
+    if (dependent) {
+      console.log('Filling form with selected dependent:', dependent.displayName);
+      this.fillDependentData(dependent);
+      
+      // Close the selector after filling
+      const selector = document.getElementById('visa-dependent-selector');
+      if (selector) {
+        selector.remove();
+        this.selectorVisible = false;
+      }
+    } else {
+      console.error('Could not find dependent with ref:', selectedRef);
+    }
+  }
+  
   // Fill form with dependent data from popup
   fillDependentData(dependent) {
     if (!dependent) {
